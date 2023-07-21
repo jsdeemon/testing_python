@@ -3,7 +3,7 @@ from pylenium.driver import Pylenium
 from pylenium.element import Element, Elements
 
 class TodoPage:
-    def __init__(self, py: Pylenium):
+    def __init__(self, py):
         self.py = py 
 
     def goto(self) -> 'TodoPage':
@@ -23,7 +23,7 @@ class TodoPage:
 
 
 @pytest.fixture 
-def page(py: Pylenium): 
+def page(py): 
     return TodoPage(py).goto()
 
 
@@ -38,7 +38,7 @@ def test_check_first_item(page: TodoPage):
     # 4.assert that is checked
     assert checkbox.should().be_checked() 
 
-def test_check_many_items(py: Pylenium, page: TodoPage):
+def test_check_many_items(py, page: TodoPage):
     py.visit("https://lambdatest.github.io/sample-todo-app")
 
     # $$("li[ng-repeat*='sampletodo']")
@@ -49,13 +49,13 @@ def test_check_many_items(py: Pylenium, page: TodoPage):
     todo4.click()
     assert py.contains("3 of 5 remaining") 
 
-def test_check_all_items(py: Pylenium, page: TodoPage):
+def test_check_all_items(py, page: TodoPage):
     for todo in page.get_all_todos():
         todo.click()
 
         assert py.contains("0 of 5 remaining") 
 
-def test_add_new_item(py: Pylenium, page: TodoPage):
+def test_add_new_item(py, page: TodoPage):
     page.add_todo("Finish the course")
 
     assert page.get_all_todos().should().have_length(6)

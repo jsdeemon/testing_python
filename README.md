@@ -85,4 +85,77 @@ scenarios to cover:
 - check many items 
 - check all items 
 - add a new item
-- remove an item 
+- remove an item  
+
+### Run tests in Parallel
+pytest-xdist-plugin 
+
+- running tests in parallel greatly reduces execution of time which is crutial to Ci/CD 
+
+Parralel design - Pitfalls:
+- tests should not share data or state 
+- tests should not be dependant on each other 
+
+RIGHT WAY:
+- each test has it`s own instance of a driver 
+- tests are independent of each other 
+- tests manage their own data and state 
+- tests should be modular 
+
+Pylenium is parallel-first 
+- the py fixture gives a river to each test 
+
+To run test in pytest
+```bash
+$ sudo pytest tests/test_todo.py 
+```
+To run in parallel with number of threads 2:
+```bash
+$ sudo pytest tests/test_todo.py -n 2
+```
+
+```bash
+$ sudo poetry run pytest tests/test_todo.py
+``` 
+
+
+## RUN WITH DOCKER 
+https://docs.pylenium.io/guides/run-tests-in-containers 
+
+create docker-compose.yml 
+
+https://github.com/sindresorhus/guides/blob/main/docker-without-sudo.md
+
+https://phoenixnap.com/kb/docker-permission-denied 
+here do the following to use docker without sudo:
+```bash
+$ sudo groupadd -f docker
+$ sudo usermod -aG docker $USER 
+$ newgrp docker 
+$ groups
+``` 
+there should be a docker shown in terminal
+
+run 
+```bash
+$ docker compose up
+```
+or
+```bash
+$ docker compose up -d
+```
+stop
+```bash 
+$ docker compose down
+```
+
+run in terminal:
+```bash
+$ pytest tests/test_todo.py -n 2 --remote_url="http://localhost:4444/wd/hub"
+``` 
+
+To scale nodes:
+```bash
+$ docker-compose up -d --scale chrome=5
+```
+This will spin up the Grid with 5 chrome Nodes!

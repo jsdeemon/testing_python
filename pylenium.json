@@ -3,16 +3,16 @@
     "browser": "chrome",
     "remote_url": "",
     "wait_time": 10,
-    "page_load_wait_time": 0,
+    "page_load_wait_time": 10,
     "options": [],
     "capabilities": {},
     "version": null,
     "experimental_options": null,
     "extension_paths": [],
     "webdriver_kwargs": {},
-    "seleniumwire_enabled": false,
+    "seleniumwire_enabled": true,
     "seleniumwire_options": {},
-    "local_path": ""
+    "local_path": "/home/safar/Downloads/chromedriver_linux64/chromedriver"
   },
   "logging": {
     "screenshots_on": true
